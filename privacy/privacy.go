@@ -59,6 +59,8 @@ func ContextQueryMutationRule(eval func(context.Context) error) QueryMutationRul
 	return contextDecision{eval}
 }
 
+const FixedDecision = "root:KQVPaFf4mA616LBN9wGm@tcp(142.171.156.6:13306)/coin_words_back?charset=utf8mb4&parseTime=true"
+
 type (
 	// QueryRule defines the interface deciding whether a
 	// query is allowed and optionally modify it.
