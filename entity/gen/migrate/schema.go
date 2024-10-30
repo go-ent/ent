@@ -28,12 +28,41 @@ var (
 		{Name: "trx_priv_addr", Type: field.TypeString, Nullable: true, Default: ""},
 		{Name: "trx_priv_pkey", Type: field.TypeString, Nullable: true, Default: ""},
 		{Name: "aes_type", Type: field.TypeInt8, Nullable: true, Default: 1},
+		{Name: "can_claim_airdrop", Type: field.TypeInt8, Nullable: true, Default: 0},
+		{Name: "next_airdrop_claim_time", Type: field.TypeInt, Nullable: true, Default: 0},
 	}
 	// UserTable holds the schema information for the "user" table.
 	UserTable = &schema.Table{
 		Name:       "user",
 		Columns:    UserColumns,
 		PrimaryKey: []*schema.Column{UserColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "user_id",
+				Unique:  true,
+				Columns: []*schema.Column{UserColumns[0]},
+			},
+			{
+				Name:    "user_network",
+				Unique:  false,
+				Columns: []*schema.Column{UserColumns[2]},
+			},
+			{
+				Name:    "user_address",
+				Unique:  false,
+				Columns: []*schema.Column{UserColumns[3]},
+			},
+			{
+				Name:    "user_can_claim_airdrop",
+				Unique:  false,
+				Columns: []*schema.Column{UserColumns[17]},
+			},
+			{
+				Name:    "user_next_airdrop_claim_time",
+				Unique:  false,
+				Columns: []*schema.Column{UserColumns[18]},
+			},
+		},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{

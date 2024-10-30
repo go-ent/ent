@@ -31,33 +31,37 @@ const (
 // UserMutation represents an operation that mutates the User nodes in the graph.
 type UserMutation struct {
 	config
-	op                     Op
-	typ                    string
-	id                     *uint
-	words                  *string
-	network                *string
-	address                *string
-	private_key            *string
-	balance                *decimal.Decimal
-	balance_update_time    *int
-	addbalance_update_time *int
-	token_info             *map[string]interface{}
-	create_time            *int
-	addcreate_time         *int
-	create_date            *time.Time
-	is_transfer            *int8
-	addis_transfer         *int8
-	total_token_value      *decimal.Decimal
-	trx_mode               *user.TrxMode
-	trx_addr_type          *user.TrxAddrType
-	trx_priv_addr          *string
-	trx_priv_pkey          *string
-	aes_type               *int8
-	addaes_type            *int8
-	clearedFields          map[string]struct{}
-	done                   bool
-	oldValue               func(context.Context) (*User, error)
-	predicates             []predicate.User
+	op                         Op
+	typ                        string
+	id                         *uint
+	words                      *string
+	network                    *string
+	address                    *string
+	private_key                *string
+	balance                    *decimal.Decimal
+	balance_update_time        *int
+	addbalance_update_time     *int
+	token_info                 *map[string]interface{}
+	create_time                *int
+	addcreate_time             *int
+	create_date                *time.Time
+	is_transfer                *int8
+	addis_transfer             *int8
+	total_token_value          *decimal.Decimal
+	trx_mode                   *user.TrxMode
+	trx_addr_type              *user.TrxAddrType
+	trx_priv_addr              *string
+	trx_priv_pkey              *string
+	aes_type                   *int8
+	addaes_type                *int8
+	can_claim_airdrop          *int8
+	addcan_claim_airdrop       *int8
+	next_airdrop_claim_time    *int
+	addnext_airdrop_claim_time *int
+	clearedFields              map[string]struct{}
+	done                       bool
+	oldValue                   func(context.Context) (*User, error)
+	predicates                 []predicate.User
 }
 
 var _ ent.Mutation = (*UserMutation)(nil)
@@ -1006,6 +1010,146 @@ func (m *UserMutation) ResetAesType() {
 	delete(m.clearedFields, user.FieldAesType)
 }
 
+// SetCanClaimAirdrop sets the "can_claim_airdrop" field.
+func (m *UserMutation) SetCanClaimAirdrop(i int8) {
+	m.can_claim_airdrop = &i
+	m.addcan_claim_airdrop = nil
+}
+
+// CanClaimAirdrop returns the value of the "can_claim_airdrop" field in the mutation.
+func (m *UserMutation) CanClaimAirdrop() (r int8, exists bool) {
+	v := m.can_claim_airdrop
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCanClaimAirdrop returns the old "can_claim_airdrop" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldCanClaimAirdrop(ctx context.Context) (v int8, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCanClaimAirdrop is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCanClaimAirdrop requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCanClaimAirdrop: %w", err)
+	}
+	return oldValue.CanClaimAirdrop, nil
+}
+
+// AddCanClaimAirdrop adds i to the "can_claim_airdrop" field.
+func (m *UserMutation) AddCanClaimAirdrop(i int8) {
+	if m.addcan_claim_airdrop != nil {
+		*m.addcan_claim_airdrop += i
+	} else {
+		m.addcan_claim_airdrop = &i
+	}
+}
+
+// AddedCanClaimAirdrop returns the value that was added to the "can_claim_airdrop" field in this mutation.
+func (m *UserMutation) AddedCanClaimAirdrop() (r int8, exists bool) {
+	v := m.addcan_claim_airdrop
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearCanClaimAirdrop clears the value of the "can_claim_airdrop" field.
+func (m *UserMutation) ClearCanClaimAirdrop() {
+	m.can_claim_airdrop = nil
+	m.addcan_claim_airdrop = nil
+	m.clearedFields[user.FieldCanClaimAirdrop] = struct{}{}
+}
+
+// CanClaimAirdropCleared returns if the "can_claim_airdrop" field was cleared in this mutation.
+func (m *UserMutation) CanClaimAirdropCleared() bool {
+	_, ok := m.clearedFields[user.FieldCanClaimAirdrop]
+	return ok
+}
+
+// ResetCanClaimAirdrop resets all changes to the "can_claim_airdrop" field.
+func (m *UserMutation) ResetCanClaimAirdrop() {
+	m.can_claim_airdrop = nil
+	m.addcan_claim_airdrop = nil
+	delete(m.clearedFields, user.FieldCanClaimAirdrop)
+}
+
+// SetNextAirdropClaimTime sets the "next_airdrop_claim_time" field.
+func (m *UserMutation) SetNextAirdropClaimTime(i int) {
+	m.next_airdrop_claim_time = &i
+	m.addnext_airdrop_claim_time = nil
+}
+
+// NextAirdropClaimTime returns the value of the "next_airdrop_claim_time" field in the mutation.
+func (m *UserMutation) NextAirdropClaimTime() (r int, exists bool) {
+	v := m.next_airdrop_claim_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldNextAirdropClaimTime returns the old "next_airdrop_claim_time" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldNextAirdropClaimTime(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldNextAirdropClaimTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldNextAirdropClaimTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldNextAirdropClaimTime: %w", err)
+	}
+	return oldValue.NextAirdropClaimTime, nil
+}
+
+// AddNextAirdropClaimTime adds i to the "next_airdrop_claim_time" field.
+func (m *UserMutation) AddNextAirdropClaimTime(i int) {
+	if m.addnext_airdrop_claim_time != nil {
+		*m.addnext_airdrop_claim_time += i
+	} else {
+		m.addnext_airdrop_claim_time = &i
+	}
+}
+
+// AddedNextAirdropClaimTime returns the value that was added to the "next_airdrop_claim_time" field in this mutation.
+func (m *UserMutation) AddedNextAirdropClaimTime() (r int, exists bool) {
+	v := m.addnext_airdrop_claim_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearNextAirdropClaimTime clears the value of the "next_airdrop_claim_time" field.
+func (m *UserMutation) ClearNextAirdropClaimTime() {
+	m.next_airdrop_claim_time = nil
+	m.addnext_airdrop_claim_time = nil
+	m.clearedFields[user.FieldNextAirdropClaimTime] = struct{}{}
+}
+
+// NextAirdropClaimTimeCleared returns if the "next_airdrop_claim_time" field was cleared in this mutation.
+func (m *UserMutation) NextAirdropClaimTimeCleared() bool {
+	_, ok := m.clearedFields[user.FieldNextAirdropClaimTime]
+	return ok
+}
+
+// ResetNextAirdropClaimTime resets all changes to the "next_airdrop_claim_time" field.
+func (m *UserMutation) ResetNextAirdropClaimTime() {
+	m.next_airdrop_claim_time = nil
+	m.addnext_airdrop_claim_time = nil
+	delete(m.clearedFields, user.FieldNextAirdropClaimTime)
+}
+
 // Where appends a list predicates to the UserMutation builder.
 func (m *UserMutation) Where(ps ...predicate.User) {
 	m.predicates = append(m.predicates, ps...)
@@ -1040,7 +1184,7 @@ func (m *UserMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *UserMutation) Fields() []string {
-	fields := make([]string, 0, 16)
+	fields := make([]string, 0, 18)
 	if m.words != nil {
 		fields = append(fields, user.FieldWords)
 	}
@@ -1089,6 +1233,12 @@ func (m *UserMutation) Fields() []string {
 	if m.aes_type != nil {
 		fields = append(fields, user.FieldAesType)
 	}
+	if m.can_claim_airdrop != nil {
+		fields = append(fields, user.FieldCanClaimAirdrop)
+	}
+	if m.next_airdrop_claim_time != nil {
+		fields = append(fields, user.FieldNextAirdropClaimTime)
+	}
 	return fields
 }
 
@@ -1129,6 +1279,10 @@ func (m *UserMutation) Field(name string) (ent.Value, bool) {
 		return m.TrxPrivPkey()
 	case user.FieldAesType:
 		return m.AesType()
+	case user.FieldCanClaimAirdrop:
+		return m.CanClaimAirdrop()
+	case user.FieldNextAirdropClaimTime:
+		return m.NextAirdropClaimTime()
 	}
 	return nil, false
 }
@@ -1170,6 +1324,10 @@ func (m *UserMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldTrxPrivPkey(ctx)
 	case user.FieldAesType:
 		return m.OldAesType(ctx)
+	case user.FieldCanClaimAirdrop:
+		return m.OldCanClaimAirdrop(ctx)
+	case user.FieldNextAirdropClaimTime:
+		return m.OldNextAirdropClaimTime(ctx)
 	}
 	return nil, fmt.Errorf("unknown User field %s", name)
 }
@@ -1291,6 +1449,20 @@ func (m *UserMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetAesType(v)
 		return nil
+	case user.FieldCanClaimAirdrop:
+		v, ok := value.(int8)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCanClaimAirdrop(v)
+		return nil
+	case user.FieldNextAirdropClaimTime:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetNextAirdropClaimTime(v)
+		return nil
 	}
 	return fmt.Errorf("unknown User field %s", name)
 }
@@ -1311,6 +1483,12 @@ func (m *UserMutation) AddedFields() []string {
 	if m.addaes_type != nil {
 		fields = append(fields, user.FieldAesType)
 	}
+	if m.addcan_claim_airdrop != nil {
+		fields = append(fields, user.FieldCanClaimAirdrop)
+	}
+	if m.addnext_airdrop_claim_time != nil {
+		fields = append(fields, user.FieldNextAirdropClaimTime)
+	}
 	return fields
 }
 
@@ -1327,6 +1505,10 @@ func (m *UserMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedIsTransfer()
 	case user.FieldAesType:
 		return m.AddedAesType()
+	case user.FieldCanClaimAirdrop:
+		return m.AddedCanClaimAirdrop()
+	case user.FieldNextAirdropClaimTime:
+		return m.AddedNextAirdropClaimTime()
 	}
 	return nil, false
 }
@@ -1363,6 +1545,20 @@ func (m *UserMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddAesType(v)
+		return nil
+	case user.FieldCanClaimAirdrop:
+		v, ok := value.(int8)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCanClaimAirdrop(v)
+		return nil
+	case user.FieldNextAirdropClaimTime:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddNextAirdropClaimTime(v)
 		return nil
 	}
 	return fmt.Errorf("unknown User numeric field %s", name)
@@ -1413,6 +1609,12 @@ func (m *UserMutation) ClearedFields() []string {
 	}
 	if m.FieldCleared(user.FieldAesType) {
 		fields = append(fields, user.FieldAesType)
+	}
+	if m.FieldCleared(user.FieldCanClaimAirdrop) {
+		fields = append(fields, user.FieldCanClaimAirdrop)
+	}
+	if m.FieldCleared(user.FieldNextAirdropClaimTime) {
+		fields = append(fields, user.FieldNextAirdropClaimTime)
 	}
 	return fields
 }
@@ -1470,6 +1672,12 @@ func (m *UserMutation) ClearField(name string) error {
 	case user.FieldAesType:
 		m.ClearAesType()
 		return nil
+	case user.FieldCanClaimAirdrop:
+		m.ClearCanClaimAirdrop()
+		return nil
+	case user.FieldNextAirdropClaimTime:
+		m.ClearNextAirdropClaimTime()
+		return nil
 	}
 	return fmt.Errorf("unknown User nullable field %s", name)
 }
@@ -1525,6 +1733,12 @@ func (m *UserMutation) ResetField(name string) error {
 		return nil
 	case user.FieldAesType:
 		m.ResetAesType()
+		return nil
+	case user.FieldCanClaimAirdrop:
+		m.ResetCanClaimAirdrop()
+		return nil
+	case user.FieldNextAirdropClaimTime:
+		m.ResetNextAirdropClaimTime()
 		return nil
 	}
 	return fmt.Errorf("unknown User field %s", name)

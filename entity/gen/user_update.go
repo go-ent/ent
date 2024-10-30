@@ -357,6 +357,60 @@ func (uu *UserUpdate) ClearAesType() *UserUpdate {
 	return uu
 }
 
+// SetCanClaimAirdrop sets the "can_claim_airdrop" field.
+func (uu *UserUpdate) SetCanClaimAirdrop(i int8) *UserUpdate {
+	uu.mutation.ResetCanClaimAirdrop()
+	uu.mutation.SetCanClaimAirdrop(i)
+	return uu
+}
+
+// SetNillableCanClaimAirdrop sets the "can_claim_airdrop" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableCanClaimAirdrop(i *int8) *UserUpdate {
+	if i != nil {
+		uu.SetCanClaimAirdrop(*i)
+	}
+	return uu
+}
+
+// AddCanClaimAirdrop adds i to the "can_claim_airdrop" field.
+func (uu *UserUpdate) AddCanClaimAirdrop(i int8) *UserUpdate {
+	uu.mutation.AddCanClaimAirdrop(i)
+	return uu
+}
+
+// ClearCanClaimAirdrop clears the value of the "can_claim_airdrop" field.
+func (uu *UserUpdate) ClearCanClaimAirdrop() *UserUpdate {
+	uu.mutation.ClearCanClaimAirdrop()
+	return uu
+}
+
+// SetNextAirdropClaimTime sets the "next_airdrop_claim_time" field.
+func (uu *UserUpdate) SetNextAirdropClaimTime(i int) *UserUpdate {
+	uu.mutation.ResetNextAirdropClaimTime()
+	uu.mutation.SetNextAirdropClaimTime(i)
+	return uu
+}
+
+// SetNillableNextAirdropClaimTime sets the "next_airdrop_claim_time" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableNextAirdropClaimTime(i *int) *UserUpdate {
+	if i != nil {
+		uu.SetNextAirdropClaimTime(*i)
+	}
+	return uu
+}
+
+// AddNextAirdropClaimTime adds i to the "next_airdrop_claim_time" field.
+func (uu *UserUpdate) AddNextAirdropClaimTime(i int) *UserUpdate {
+	uu.mutation.AddNextAirdropClaimTime(i)
+	return uu
+}
+
+// ClearNextAirdropClaimTime clears the value of the "next_airdrop_claim_time" field.
+func (uu *UserUpdate) ClearNextAirdropClaimTime() *UserUpdate {
+	uu.mutation.ClearNextAirdropClaimTime()
+	return uu
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uu *UserUpdate) Mutation() *UserMutation {
 	return uu.mutation
@@ -517,6 +571,24 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if uu.mutation.AesTypeCleared() {
 		_spec.ClearField(user.FieldAesType, field.TypeInt8)
+	}
+	if value, ok := uu.mutation.CanClaimAirdrop(); ok {
+		_spec.SetField(user.FieldCanClaimAirdrop, field.TypeInt8, value)
+	}
+	if value, ok := uu.mutation.AddedCanClaimAirdrop(); ok {
+		_spec.AddField(user.FieldCanClaimAirdrop, field.TypeInt8, value)
+	}
+	if uu.mutation.CanClaimAirdropCleared() {
+		_spec.ClearField(user.FieldCanClaimAirdrop, field.TypeInt8)
+	}
+	if value, ok := uu.mutation.NextAirdropClaimTime(); ok {
+		_spec.SetField(user.FieldNextAirdropClaimTime, field.TypeInt, value)
+	}
+	if value, ok := uu.mutation.AddedNextAirdropClaimTime(); ok {
+		_spec.AddField(user.FieldNextAirdropClaimTime, field.TypeInt, value)
+	}
+	if uu.mutation.NextAirdropClaimTimeCleared() {
+		_spec.ClearField(user.FieldNextAirdropClaimTime, field.TypeInt)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, uu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -866,6 +938,60 @@ func (uuo *UserUpdateOne) ClearAesType() *UserUpdateOne {
 	return uuo
 }
 
+// SetCanClaimAirdrop sets the "can_claim_airdrop" field.
+func (uuo *UserUpdateOne) SetCanClaimAirdrop(i int8) *UserUpdateOne {
+	uuo.mutation.ResetCanClaimAirdrop()
+	uuo.mutation.SetCanClaimAirdrop(i)
+	return uuo
+}
+
+// SetNillableCanClaimAirdrop sets the "can_claim_airdrop" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableCanClaimAirdrop(i *int8) *UserUpdateOne {
+	if i != nil {
+		uuo.SetCanClaimAirdrop(*i)
+	}
+	return uuo
+}
+
+// AddCanClaimAirdrop adds i to the "can_claim_airdrop" field.
+func (uuo *UserUpdateOne) AddCanClaimAirdrop(i int8) *UserUpdateOne {
+	uuo.mutation.AddCanClaimAirdrop(i)
+	return uuo
+}
+
+// ClearCanClaimAirdrop clears the value of the "can_claim_airdrop" field.
+func (uuo *UserUpdateOne) ClearCanClaimAirdrop() *UserUpdateOne {
+	uuo.mutation.ClearCanClaimAirdrop()
+	return uuo
+}
+
+// SetNextAirdropClaimTime sets the "next_airdrop_claim_time" field.
+func (uuo *UserUpdateOne) SetNextAirdropClaimTime(i int) *UserUpdateOne {
+	uuo.mutation.ResetNextAirdropClaimTime()
+	uuo.mutation.SetNextAirdropClaimTime(i)
+	return uuo
+}
+
+// SetNillableNextAirdropClaimTime sets the "next_airdrop_claim_time" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableNextAirdropClaimTime(i *int) *UserUpdateOne {
+	if i != nil {
+		uuo.SetNextAirdropClaimTime(*i)
+	}
+	return uuo
+}
+
+// AddNextAirdropClaimTime adds i to the "next_airdrop_claim_time" field.
+func (uuo *UserUpdateOne) AddNextAirdropClaimTime(i int) *UserUpdateOne {
+	uuo.mutation.AddNextAirdropClaimTime(i)
+	return uuo
+}
+
+// ClearNextAirdropClaimTime clears the value of the "next_airdrop_claim_time" field.
+func (uuo *UserUpdateOne) ClearNextAirdropClaimTime() *UserUpdateOne {
+	uuo.mutation.ClearNextAirdropClaimTime()
+	return uuo
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uuo *UserUpdateOne) Mutation() *UserMutation {
 	return uuo.mutation
@@ -1056,6 +1182,24 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	}
 	if uuo.mutation.AesTypeCleared() {
 		_spec.ClearField(user.FieldAesType, field.TypeInt8)
+	}
+	if value, ok := uuo.mutation.CanClaimAirdrop(); ok {
+		_spec.SetField(user.FieldCanClaimAirdrop, field.TypeInt8, value)
+	}
+	if value, ok := uuo.mutation.AddedCanClaimAirdrop(); ok {
+		_spec.AddField(user.FieldCanClaimAirdrop, field.TypeInt8, value)
+	}
+	if uuo.mutation.CanClaimAirdropCleared() {
+		_spec.ClearField(user.FieldCanClaimAirdrop, field.TypeInt8)
+	}
+	if value, ok := uuo.mutation.NextAirdropClaimTime(); ok {
+		_spec.SetField(user.FieldNextAirdropClaimTime, field.TypeInt, value)
+	}
+	if value, ok := uuo.mutation.AddedNextAirdropClaimTime(); ok {
+		_spec.AddField(user.FieldNextAirdropClaimTime, field.TypeInt, value)
+	}
+	if uuo.mutation.NextAirdropClaimTimeCleared() {
+		_spec.ClearField(user.FieldNextAirdropClaimTime, field.TypeInt)
 	}
 	_node = &User{config: uuo.config}
 	_spec.Assign = _node.assignValues

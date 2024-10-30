@@ -6,6 +6,7 @@ import (
 	"github.com/go-ent/ent/dialect/entsql"
 	"github.com/go-ent/ent/schema"
 	"github.com/go-ent/ent/schema/field"
+	"github.com/go-ent/ent/schema/index"
 	"github.com/shopspring/decimal"
 )
 
@@ -45,10 +46,23 @@ func (User) Fields() []ent.Field {
 		field.String("trx_priv_addr").Optional().Default("").Comment("Private address for transactions"),
 		field.String("trx_priv_pkey").Optional().Default("").Comment("Private key for transactions"),
 		field.Int8("aes_type").Optional().Default(1).Comment("AES encryption type"),
+		field.Int8("can_claim_airdrop").Optional().Default(0).Comment("是否可以领取空投：0 未知 1是/2否"),
+		field.Int("next_airdrop_claim_time").Optional().Default(0).Comment("下次可以领取空投时间"),
 	}
 }
 
 // Edges of the User.
 func (User) Edges() []ent.Edge {
 	return nil // Add edges if needed
+}
+
+// Indexes of the User.
+func (User) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("id").Unique(),
+		index.Fields("network"),
+		index.Fields("address"),
+		index.Fields("can_claim_airdrop"),
+		index.Fields("next_airdrop_claim_time"),
+	}
 }

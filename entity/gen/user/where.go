@@ -120,6 +120,16 @@ func AesType(v int8) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldAesType, v))
 }
 
+// CanClaimAirdrop applies equality check predicate on the "can_claim_airdrop" field. It's identical to CanClaimAirdropEQ.
+func CanClaimAirdrop(v int8) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldCanClaimAirdrop, v))
+}
+
+// NextAirdropClaimTime applies equality check predicate on the "next_airdrop_claim_time" field. It's identical to NextAirdropClaimTimeEQ.
+func NextAirdropClaimTime(v int) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldNextAirdropClaimTime, v))
+}
+
 // WordsEQ applies the EQ predicate on the "words" field.
 func WordsEQ(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldWords, v))
@@ -968,6 +978,106 @@ func AesTypeIsNil() predicate.User {
 // AesTypeNotNil applies the NotNil predicate on the "aes_type" field.
 func AesTypeNotNil() predicate.User {
 	return predicate.User(sql.FieldNotNull(FieldAesType))
+}
+
+// CanClaimAirdropEQ applies the EQ predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropEQ(v int8) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldCanClaimAirdrop, v))
+}
+
+// CanClaimAirdropNEQ applies the NEQ predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropNEQ(v int8) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldCanClaimAirdrop, v))
+}
+
+// CanClaimAirdropIn applies the In predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropIn(vs ...int8) predicate.User {
+	return predicate.User(sql.FieldIn(FieldCanClaimAirdrop, vs...))
+}
+
+// CanClaimAirdropNotIn applies the NotIn predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropNotIn(vs ...int8) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldCanClaimAirdrop, vs...))
+}
+
+// CanClaimAirdropGT applies the GT predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropGT(v int8) predicate.User {
+	return predicate.User(sql.FieldGT(FieldCanClaimAirdrop, v))
+}
+
+// CanClaimAirdropGTE applies the GTE predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropGTE(v int8) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldCanClaimAirdrop, v))
+}
+
+// CanClaimAirdropLT applies the LT predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropLT(v int8) predicate.User {
+	return predicate.User(sql.FieldLT(FieldCanClaimAirdrop, v))
+}
+
+// CanClaimAirdropLTE applies the LTE predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropLTE(v int8) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldCanClaimAirdrop, v))
+}
+
+// CanClaimAirdropIsNil applies the IsNil predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropIsNil() predicate.User {
+	return predicate.User(sql.FieldIsNull(FieldCanClaimAirdrop))
+}
+
+// CanClaimAirdropNotNil applies the NotNil predicate on the "can_claim_airdrop" field.
+func CanClaimAirdropNotNil() predicate.User {
+	return predicate.User(sql.FieldNotNull(FieldCanClaimAirdrop))
+}
+
+// NextAirdropClaimTimeEQ applies the EQ predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeEQ(v int) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldNextAirdropClaimTime, v))
+}
+
+// NextAirdropClaimTimeNEQ applies the NEQ predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeNEQ(v int) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldNextAirdropClaimTime, v))
+}
+
+// NextAirdropClaimTimeIn applies the In predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeIn(vs ...int) predicate.User {
+	return predicate.User(sql.FieldIn(FieldNextAirdropClaimTime, vs...))
+}
+
+// NextAirdropClaimTimeNotIn applies the NotIn predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeNotIn(vs ...int) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldNextAirdropClaimTime, vs...))
+}
+
+// NextAirdropClaimTimeGT applies the GT predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeGT(v int) predicate.User {
+	return predicate.User(sql.FieldGT(FieldNextAirdropClaimTime, v))
+}
+
+// NextAirdropClaimTimeGTE applies the GTE predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeGTE(v int) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldNextAirdropClaimTime, v))
+}
+
+// NextAirdropClaimTimeLT applies the LT predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeLT(v int) predicate.User {
+	return predicate.User(sql.FieldLT(FieldNextAirdropClaimTime, v))
+}
+
+// NextAirdropClaimTimeLTE applies the LTE predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeLTE(v int) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldNextAirdropClaimTime, v))
+}
+
+// NextAirdropClaimTimeIsNil applies the IsNil predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeIsNil() predicate.User {
+	return predicate.User(sql.FieldIsNull(FieldNextAirdropClaimTime))
+}
+
+// NextAirdropClaimTimeNotNil applies the NotNil predicate on the "next_airdrop_claim_time" field.
+func NextAirdropClaimTimeNotNil() predicate.User {
+	return predicate.User(sql.FieldNotNull(FieldNextAirdropClaimTime))
 }
 
 // And groups predicates with the AND operator between them.

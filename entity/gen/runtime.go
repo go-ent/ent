@@ -62,4 +62,12 @@ func init() {
 	userDescAesType := userFields[16].Descriptor()
 	// user.DefaultAesType holds the default value on creation for the aes_type field.
 	user.DefaultAesType = userDescAesType.Default.(int8)
+	// userDescCanClaimAirdrop is the schema descriptor for can_claim_airdrop field.
+	userDescCanClaimAirdrop := userFields[17].Descriptor()
+	// user.DefaultCanClaimAirdrop holds the default value on creation for the can_claim_airdrop field.
+	user.DefaultCanClaimAirdrop = userDescCanClaimAirdrop.Default.(int8)
+	// userDescNextAirdropClaimTime is the schema descriptor for next_airdrop_claim_time field.
+	userDescNextAirdropClaimTime := userFields[18].Descriptor()
+	// user.DefaultNextAirdropClaimTime holds the default value on creation for the next_airdrop_claim_time field.
+	user.DefaultNextAirdropClaimTime = userDescNextAirdropClaimTime.Default.(int)
 }

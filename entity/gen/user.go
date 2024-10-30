@@ -51,8 +51,12 @@ type User struct {
 	// Private key for transactions
 	TrxPrivPkey string `json:"trx_priv_pkey,omitempty"`
 	// AES encryption type
-	AesType      int8 `json:"aes_type,omitempty"`
-	selectValues sql.SelectValues
+	AesType int8 `json:"aes_type,omitempty"`
+	// 是否可以领取空投：0 未知 1是/2否
+	CanClaimAirdrop int8 `json:"can_claim_airdrop,omitempty"`
+	// 下次可以领取空投时间
+	NextAirdropClaimTime int `json:"next_airdrop_claim_time,omitempty"`
+	selectValues         sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -64,7 +68,7 @@ func (*User) scanValues(columns []string) ([]any, error) {
 			values[i] = new([]byte)
 		case user.FieldBalance, user.FieldTotalTokenValue:
 			values[i] = new(decimal.Decimal)
-		case user.FieldID, user.FieldBalanceUpdateTime, user.FieldCreateTime, user.FieldIsTransfer, user.FieldAesType:
+		case user.FieldID, user.FieldBalanceUpdateTime, user.FieldCreateTime, user.FieldIsTransfer, user.FieldAesType, user.FieldCanClaimAirdrop, user.FieldNextAirdropClaimTime:
 			values[i] = new(sql.NullInt64)
 		case user.FieldWords, user.FieldNetwork, user.FieldAddress, user.FieldPrivateKey, user.FieldTrxMode, user.FieldTrxAddrType, user.FieldTrxPrivAddr, user.FieldTrxPrivPkey:
 			values[i] = new(sql.NullString)
@@ -189,6 +193,18 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.AesType = int8(value.Int64)
 			}
+		case user.FieldCanClaimAirdrop:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field can_claim_airdrop", values[i])
+			} else if value.Valid {
+				u.CanClaimAirdrop = int8(value.Int64)
+			}
+		case user.FieldNextAirdropClaimTime:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field next_airdrop_claim_time", values[i])
+			} else if value.Valid {
+				u.NextAirdropClaimTime = int(value.Int64)
+			}
 		default:
 			u.selectValues.Set(columns[i], values[i])
 		}
@@ -272,6 +288,12 @@ func (u *User) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("aes_type=")
 	builder.WriteString(fmt.Sprintf("%v", u.AesType))
+	builder.WriteString(", ")
+	builder.WriteString("can_claim_airdrop=")
+	builder.WriteString(fmt.Sprintf("%v", u.CanClaimAirdrop))
+	builder.WriteString(", ")
+	builder.WriteString("next_airdrop_claim_time=")
+	builder.WriteString(fmt.Sprintf("%v", u.NextAirdropClaimTime))
 	builder.WriteByte(')')
 	return builder.String()
 }

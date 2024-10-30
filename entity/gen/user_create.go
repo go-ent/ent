@@ -237,6 +237,34 @@ func (uc *UserCreate) SetNillableAesType(i *int8) *UserCreate {
 	return uc
 }
 
+// SetCanClaimAirdrop sets the "can_claim_airdrop" field.
+func (uc *UserCreate) SetCanClaimAirdrop(i int8) *UserCreate {
+	uc.mutation.SetCanClaimAirdrop(i)
+	return uc
+}
+
+// SetNillableCanClaimAirdrop sets the "can_claim_airdrop" field if the given value is not nil.
+func (uc *UserCreate) SetNillableCanClaimAirdrop(i *int8) *UserCreate {
+	if i != nil {
+		uc.SetCanClaimAirdrop(*i)
+	}
+	return uc
+}
+
+// SetNextAirdropClaimTime sets the "next_airdrop_claim_time" field.
+func (uc *UserCreate) SetNextAirdropClaimTime(i int) *UserCreate {
+	uc.mutation.SetNextAirdropClaimTime(i)
+	return uc
+}
+
+// SetNillableNextAirdropClaimTime sets the "next_airdrop_claim_time" field if the given value is not nil.
+func (uc *UserCreate) SetNillableNextAirdropClaimTime(i *int) *UserCreate {
+	if i != nil {
+		uc.SetNextAirdropClaimTime(*i)
+	}
+	return uc
+}
+
 // SetID sets the "id" field.
 func (uc *UserCreate) SetID(u uint) *UserCreate {
 	uc.mutation.SetID(u)
@@ -333,6 +361,14 @@ func (uc *UserCreate) defaults() {
 	if _, ok := uc.mutation.AesType(); !ok {
 		v := user.DefaultAesType
 		uc.mutation.SetAesType(v)
+	}
+	if _, ok := uc.mutation.CanClaimAirdrop(); !ok {
+		v := user.DefaultCanClaimAirdrop
+		uc.mutation.SetCanClaimAirdrop(v)
+	}
+	if _, ok := uc.mutation.NextAirdropClaimTime(); !ok {
+		v := user.DefaultNextAirdropClaimTime
+		uc.mutation.SetNextAirdropClaimTime(v)
 	}
 }
 
@@ -449,6 +485,14 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := uc.mutation.AesType(); ok {
 		_spec.SetField(user.FieldAesType, field.TypeInt8, value)
 		_node.AesType = value
+	}
+	if value, ok := uc.mutation.CanClaimAirdrop(); ok {
+		_spec.SetField(user.FieldCanClaimAirdrop, field.TypeInt8, value)
+		_node.CanClaimAirdrop = value
+	}
+	if value, ok := uc.mutation.NextAirdropClaimTime(); ok {
+		_spec.SetField(user.FieldNextAirdropClaimTime, field.TypeInt, value)
+		_node.NextAirdropClaimTime = value
 	}
 	return _node, _spec
 }

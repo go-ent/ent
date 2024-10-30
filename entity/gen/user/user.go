@@ -46,6 +46,10 @@ const (
 	FieldTrxPrivPkey = "trx_priv_pkey"
 	// FieldAesType holds the string denoting the aes_type field in the database.
 	FieldAesType = "aes_type"
+	// FieldCanClaimAirdrop holds the string denoting the can_claim_airdrop field in the database.
+	FieldCanClaimAirdrop = "can_claim_airdrop"
+	// FieldNextAirdropClaimTime holds the string denoting the next_airdrop_claim_time field in the database.
+	FieldNextAirdropClaimTime = "next_airdrop_claim_time"
 	// Table holds the table name of the user in the database.
 	Table = "user"
 )
@@ -69,6 +73,8 @@ var Columns = []string{
 	FieldTrxPrivAddr,
 	FieldTrxPrivPkey,
 	FieldAesType,
+	FieldCanClaimAirdrop,
+	FieldNextAirdropClaimTime,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -106,6 +112,10 @@ var (
 	DefaultTrxPrivPkey string
 	// DefaultAesType holds the default value on creation for the "aes_type" field.
 	DefaultAesType int8
+	// DefaultCanClaimAirdrop holds the default value on creation for the "can_claim_airdrop" field.
+	DefaultCanClaimAirdrop int8
+	// DefaultNextAirdropClaimTime holds the default value on creation for the "next_airdrop_claim_time" field.
+	DefaultNextAirdropClaimTime int
 )
 
 // TrxMode defines the type for the "trx_mode" enum field.
@@ -241,4 +251,14 @@ func ByTrxPrivPkey(opts ...sql.OrderTermOption) OrderOption {
 // ByAesType orders the results by the aes_type field.
 func ByAesType(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldAesType, opts...).ToFunc()
+}
+
+// ByCanClaimAirdrop orders the results by the can_claim_airdrop field.
+func ByCanClaimAirdrop(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCanClaimAirdrop, opts...).ToFunc()
+}
+
+// ByNextAirdropClaimTime orders the results by the next_airdrop_claim_time field.
+func ByNextAirdropClaimTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldNextAirdropClaimTime, opts...).ToFunc()
 }
