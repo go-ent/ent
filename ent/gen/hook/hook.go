@@ -6,19 +6,19 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/go-ent/ent/entity/gen"
+	"github.com/go-ent/ent/ent/gen"
 )
 
-// The UserFunc type is an adapter to allow the use of ordinary
-// function as User mutator.
-type UserFunc func(context.Context, *gen.UserMutation) (gen.Value, error)
+// The AirdropUserFunc type is an adapter to allow the use of ordinary
+// function as AirdropUser mutator.
+type AirdropUserFunc func(context.Context, *gen.AirdropUserMutation) (gen.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f UserFunc) Mutate(ctx context.Context, m gen.Mutation) (gen.Value, error) {
-	if mv, ok := m.(*gen.UserMutation); ok {
+func (f AirdropUserFunc) Mutate(ctx context.Context, m gen.Mutation) (gen.Value, error) {
+	if mv, ok := m.(*gen.AirdropUserMutation); ok {
 		return f(ctx, mv)
 	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *gen.UserMutation", m)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *gen.AirdropUserMutation", m)
 }
 
 // Condition is a hook condition function.

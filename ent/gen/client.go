@@ -10,11 +10,11 @@ import (
 	"reflect"
 
 	"github.com/go-ent/ent"
-	"github.com/go-ent/ent/entity/gen/migrate"
+	"github.com/go-ent/ent/ent/gen/migrate"
 
 	"github.com/go-ent/ent/dialect"
 	"github.com/go-ent/ent/dialect/sql"
-	"github.com/go-ent/ent/entity/gen/user"
+	"github.com/go-ent/ent/ent/gen/airdropuser"
 )
 
 // Client is the client that holds all ent builders.
@@ -22,8 +22,8 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// User is the client for interacting with the User builders.
-	User *UserClient
+	// AirdropUser is the client for interacting with the AirdropUser builders.
+	AirdropUser *AirdropUserClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -35,7 +35,7 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.User = NewUserClient(c.config)
+	c.AirdropUser = NewAirdropUserClient(c.config)
 }
 
 type (
@@ -126,9 +126,9 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:    ctx,
-		config: cfg,
-		User:   NewUserClient(cfg),
+		ctx:         ctx,
+		config:      cfg,
+		AirdropUser: NewAirdropUserClient(cfg),
 	}, nil
 }
 
@@ -146,16 +146,16 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		ctx:    ctx,
-		config: cfg,
-		User:   NewUserClient(cfg),
+		ctx:         ctx,
+		config:      cfg,
+		AirdropUser: NewAirdropUserClient(cfg),
 	}, nil
 }
 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		User.
+//		AirdropUser.
 //		Query().
 //		Count(ctx)
 func (c *Client) Debug() *Client {
@@ -177,126 +177,126 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.User.Use(hooks...)
+	c.AirdropUser.Use(hooks...)
 }
 
 // Intercept adds the query interceptors to all the entity clients.
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
-	c.User.Intercept(interceptors...)
+	c.AirdropUser.Intercept(interceptors...)
 }
 
 // Mutate implements the ent.Mutator interface.
 func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
-	case *UserMutation:
-		return c.User.mutate(ctx, m)
+	case *AirdropUserMutation:
+		return c.AirdropUser.mutate(ctx, m)
 	default:
 		return nil, fmt.Errorf("gen: unknown mutation type %T", m)
 	}
 }
 
-// UserClient is a client for the User schema.
-type UserClient struct {
+// AirdropUserClient is a client for the AirdropUser schema.
+type AirdropUserClient struct {
 	config
 }
 
-// NewUserClient returns a client for the User from the given config.
-func NewUserClient(c config) *UserClient {
-	return &UserClient{config: c}
+// NewAirdropUserClient returns a client for the AirdropUser from the given config.
+func NewAirdropUserClient(c config) *AirdropUserClient {
+	return &AirdropUserClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `user.Hooks(f(g(h())))`.
-func (c *UserClient) Use(hooks ...Hook) {
-	c.hooks.User = append(c.hooks.User, hooks...)
+// A call to `Use(f, g, h)` equals to `airdropuser.Hooks(f(g(h())))`.
+func (c *AirdropUserClient) Use(hooks ...Hook) {
+	c.hooks.AirdropUser = append(c.hooks.AirdropUser, hooks...)
 }
 
 // Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `user.Intercept(f(g(h())))`.
-func (c *UserClient) Intercept(interceptors ...Interceptor) {
-	c.inters.User = append(c.inters.User, interceptors...)
+// A call to `Intercept(f, g, h)` equals to `airdropuser.Intercept(f(g(h())))`.
+func (c *AirdropUserClient) Intercept(interceptors ...Interceptor) {
+	c.inters.AirdropUser = append(c.inters.AirdropUser, interceptors...)
 }
 
-// Create returns a builder for creating a User entity.
-func (c *UserClient) Create() *UserCreate {
-	mutation := newUserMutation(c.config, OpCreate)
-	return &UserCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a builder for creating a AirdropUser entity.
+func (c *AirdropUserClient) Create() *AirdropUserCreate {
+	mutation := newAirdropUserMutation(c.config, OpCreate)
+	return &AirdropUserCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// CreateBulk returns a builder for creating a bulk of User entities.
-func (c *UserClient) CreateBulk(builders ...*UserCreate) *UserCreateBulk {
-	return &UserCreateBulk{config: c.config, builders: builders}
+// CreateBulk returns a builder for creating a bulk of AirdropUser entities.
+func (c *AirdropUserClient) CreateBulk(builders ...*AirdropUserCreate) *AirdropUserCreateBulk {
+	return &AirdropUserCreateBulk{config: c.config, builders: builders}
 }
 
 // MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
 // a builder and applies setFunc on it.
-func (c *UserClient) MapCreateBulk(slice any, setFunc func(*UserCreate, int)) *UserCreateBulk {
+func (c *AirdropUserClient) MapCreateBulk(slice any, setFunc func(*AirdropUserCreate, int)) *AirdropUserCreateBulk {
 	rv := reflect.ValueOf(slice)
 	if rv.Kind() != reflect.Slice {
-		return &UserCreateBulk{err: fmt.Errorf("calling to UserClient.MapCreateBulk with wrong type %T, need slice", slice)}
+		return &AirdropUserCreateBulk{err: fmt.Errorf("calling to AirdropUserClient.MapCreateBulk with wrong type %T, need slice", slice)}
 	}
-	builders := make([]*UserCreate, rv.Len())
+	builders := make([]*AirdropUserCreate, rv.Len())
 	for i := 0; i < rv.Len(); i++ {
 		builders[i] = c.Create()
 		setFunc(builders[i], i)
 	}
-	return &UserCreateBulk{config: c.config, builders: builders}
+	return &AirdropUserCreateBulk{config: c.config, builders: builders}
 }
 
-// Update returns an update builder for User.
-func (c *UserClient) Update() *UserUpdate {
-	mutation := newUserMutation(c.config, OpUpdate)
-	return &UserUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for AirdropUser.
+func (c *AirdropUserClient) Update() *AirdropUserUpdate {
+	mutation := newAirdropUserMutation(c.config, OpUpdate)
+	return &AirdropUserUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *UserClient) UpdateOne(u *User) *UserUpdateOne {
-	mutation := newUserMutation(c.config, OpUpdateOne, withUser(u))
-	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *AirdropUserClient) UpdateOne(au *AirdropUser) *AirdropUserUpdateOne {
+	mutation := newAirdropUserMutation(c.config, OpUpdateOne, withAirdropUser(au))
+	return &AirdropUserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *UserClient) UpdateOneID(id uint) *UserUpdateOne {
-	mutation := newUserMutation(c.config, OpUpdateOne, withUserID(id))
-	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *AirdropUserClient) UpdateOneID(id uint) *AirdropUserUpdateOne {
+	mutation := newAirdropUserMutation(c.config, OpUpdateOne, withAirdropUserID(id))
+	return &AirdropUserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for User.
-func (c *UserClient) Delete() *UserDelete {
-	mutation := newUserMutation(c.config, OpDelete)
-	return &UserDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for AirdropUser.
+func (c *AirdropUserClient) Delete() *AirdropUserDelete {
+	mutation := newAirdropUserMutation(c.config, OpDelete)
+	return &AirdropUserDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *UserClient) DeleteOne(u *User) *UserDeleteOne {
-	return c.DeleteOneID(u.ID)
+func (c *AirdropUserClient) DeleteOne(au *AirdropUser) *AirdropUserDeleteOne {
+	return c.DeleteOneID(au.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *UserClient) DeleteOneID(id uint) *UserDeleteOne {
-	builder := c.Delete().Where(user.ID(id))
+func (c *AirdropUserClient) DeleteOneID(id uint) *AirdropUserDeleteOne {
+	builder := c.Delete().Where(airdropuser.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &UserDeleteOne{builder}
+	return &AirdropUserDeleteOne{builder}
 }
 
-// Query returns a query builder for User.
-func (c *UserClient) Query() *UserQuery {
-	return &UserQuery{
+// Query returns a query builder for AirdropUser.
+func (c *AirdropUserClient) Query() *AirdropUserQuery {
+	return &AirdropUserQuery{
 		config: c.config,
-		ctx:    &QueryContext{Type: TypeUser},
+		ctx:    &QueryContext{Type: TypeAirdropUser},
 		inters: c.Interceptors(),
 	}
 }
 
-// Get returns a User entity by its id.
-func (c *UserClient) Get(ctx context.Context, id uint) (*User, error) {
-	return c.Query().Where(user.ID(id)).Only(ctx)
+// Get returns a AirdropUser entity by its id.
+func (c *AirdropUserClient) Get(ctx context.Context, id uint) (*AirdropUser, error) {
+	return c.Query().Where(airdropuser.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *UserClient) GetX(ctx context.Context, id uint) *User {
+func (c *AirdropUserClient) GetX(ctx context.Context, id uint) *AirdropUser {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -305,36 +305,36 @@ func (c *UserClient) GetX(ctx context.Context, id uint) *User {
 }
 
 // Hooks returns the client hooks.
-func (c *UserClient) Hooks() []Hook {
-	return c.hooks.User
+func (c *AirdropUserClient) Hooks() []Hook {
+	return c.hooks.AirdropUser
 }
 
 // Interceptors returns the client interceptors.
-func (c *UserClient) Interceptors() []Interceptor {
-	return c.inters.User
+func (c *AirdropUserClient) Interceptors() []Interceptor {
+	return c.inters.AirdropUser
 }
 
-func (c *UserClient) mutate(ctx context.Context, m *UserMutation) (Value, error) {
+func (c *AirdropUserClient) mutate(ctx context.Context, m *AirdropUserMutation) (Value, error) {
 	switch m.Op() {
 	case OpCreate:
-		return (&UserCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&AirdropUserCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdate:
-		return (&UserUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&AirdropUserUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdateOne:
-		return (&UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&AirdropUserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpDelete, OpDeleteOne:
-		return (&UserDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+		return (&AirdropUserDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
-		return nil, fmt.Errorf("gen: unknown User mutation op: %q", m.Op())
+		return nil, fmt.Errorf("gen: unknown AirdropUser mutation op: %q", m.Op())
 	}
 }
 
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		User []ent.Hook
+		AirdropUser []ent.Hook
 	}
 	inters struct {
-		User []ent.Interceptor
+		AirdropUser []ent.Interceptor
 	}
 )

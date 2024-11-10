@@ -19,13 +19,11 @@ import (
 	"github.com/go-ent/ent/cmd/internal/printer"
 	"github.com/go-ent/ent/entc"
 	"github.com/go-ent/ent/entc/gen"
-	gen1 "github.com/go-ent/ent/entity/gen"
+
 	"github.com/go-ent/ent/schema/field"
 
 	"github.com/spf13/cobra"
 )
-
-var ExpandBindings *gen1.Client
 
 // IDType is a custom ID implementation for pflag.
 type IDType field.Type
@@ -59,8 +57,6 @@ func (IDType) Type() string {
 		field.TypeString,
 	})
 }
-
-var c2 *gen1.Client
 
 // String returns the default value for the help command.
 func (IDType) String() string {

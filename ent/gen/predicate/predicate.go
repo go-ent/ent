@@ -6,5 +6,5 @@ import (
 	"github.com/go-ent/ent/dialect/sql"
 )
 
-// User is the predicate function for user builders.
-type User func(*sql.Selector)
+// AirdropUser is the predicate function for airdropuser builders.
+type AirdropUser func(*sql.Selector)

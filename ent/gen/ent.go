@@ -12,7 +12,7 @@ import (
 	"github.com/go-ent/ent"
 	"github.com/go-ent/ent/dialect/sql"
 	"github.com/go-ent/ent/dialect/sql/sqlgraph"
-	"github.com/go-ent/ent/entity/gen/user"
+	"github.com/go-ent/ent/ent/gen/airdropuser"
 )
 
 // ent aliases to avoid import conflicts in user's code.
@@ -73,7 +73,7 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			user.Table: user.ValidColumn,
+			airdropuser.Table: airdropuser.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)
